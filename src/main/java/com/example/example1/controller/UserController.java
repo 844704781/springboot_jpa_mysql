@@ -3,12 +3,13 @@ package com.example.example1.controller;
 import com.example.example1.dao.UserRepository;
 import com.example.example1.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Iterator;
 import java.util.Optional;
 
 @Controller
@@ -43,4 +44,27 @@ public class UserController {
     public void delete(@RequestParam Long id) {
         userRepository.deleteById(id);
     }
+
+    /**
+     * 验证排序和分页查询方法
+     * @return
+     */
+    @GetMapping(path = "/page")
+    @ResponseBody
+    public Page<User> getAllUserByPage() {
+        //已过时
+        //return userRepository.findAll(new PageRequest(1, 20, new Sort(new Sort.Order(Sort.Direction.ASC, "name"))));
+        return userRepository.findAll(PageRequest.of(1, 20, Sort.by(Sort.Order.asc("name"))));
+    }
+
+    /**
+     * 验证排序方法
+     * @return
+     */
+    @GetMapping(path="/sort")
+    @ResponseBody
+    public Iterable<User> getAllUsersWithSort(){
+        return userRepository.findAll(Sort.by(Sort.Order.asc("name")));
+    }
+
 }
