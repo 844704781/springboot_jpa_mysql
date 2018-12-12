@@ -27,12 +27,6 @@ public class UserController {
         userRepository.save(u);
     }
 
-    @GetMapping(path = "/all")
-    @ResponseBody
-    public Iterable<User> getAllUser() {
-        return userRepository.findAll();
-    }
-
     @GetMapping(path = "/info")
     @ResponseBody
     public User findOne(@RequestParam Long id) {
@@ -40,31 +34,39 @@ public class UserController {
         return optional.orElse(new User());
     }
 
-    @GetMapping(path = "/delete")
-    public void delete(@RequestParam Long id) {
-        userRepository.deleteById(id);
-    }
-
-    /**
-     * 验证排序和分页查询方法
-     * @return
-     */
-    @GetMapping(path = "/page")
-    @ResponseBody
-    public Page<User> getAllUserByPage() {
-        //已过时
-        //return userRepository.findAll(new PageRequest(1, 20, new Sort(new Sort.Order(Sort.Direction.ASC, "name"))));
-        return userRepository.findAll(PageRequest.of(1, 20, Sort.by(Sort.Order.asc("name"))));
-    }
-
-    /**
-     * 验证排序方法
-     * @return
-     */
-    @GetMapping(path="/sort")
-    @ResponseBody
-    public Iterable<User> getAllUsersWithSort(){
-        return userRepository.findAll(Sort.by(Sort.Order.asc("name")));
-    }
+//    @GetMapping(path = "/all")
+//    @ResponseBody
+//    public Iterable<User> getAllUser() {
+//        return userRepository.findAll();
+//    }
+//
+//
+//
+//    @GetMapping(path = "/delete")
+//    public void delete(@RequestParam Long id) {
+//        userRepository.deleteById(id);
+//    }
+//
+//    /**
+//     * 验证排序和分页查询方法
+//     * @return
+//     */
+//    @GetMapping(path = "/page")
+//    @ResponseBody
+//    public Page<User> getAllUserByPage() {
+//        //已过时
+//        //return userRepository.findAll(new PageRequest(1, 20, new Sort(new Sort.Order(Sort.Direction.ASC, "name"))));
+//        return userRepository.findAll(PageRequest.of(1, 20, Sort.by(Sort.Order.asc("name"))));
+//    }
+//
+//    /**
+//     * 验证排序方法
+//     * @return
+//     */
+//    @GetMapping(path="/sort")
+//    @ResponseBody
+//    public Iterable<User> getAllUsersWithSort(){
+//        return userRepository.findAll(Sort.by(Sort.Order.asc("name")));
+//    }
 
 }
