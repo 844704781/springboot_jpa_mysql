@@ -3,12 +3,18 @@ package com.example.example1.controller;
 import com.example.example1.dao.UserRepository;
 import com.example.example1.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.lang.Iterable;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -84,7 +90,7 @@ public class UserController {
     @ResponseBody
     public void delete( User user){
 
-        userRepository.delete(user);
+        userRepository.deleteAll(userRepository.findAll(Example.of(user)));
         System.out.println(12111);
     }
 }
