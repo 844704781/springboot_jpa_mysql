@@ -33,16 +33,15 @@ public class UserController {
         return optional.orElse(new User());
     }
 
-    @GetMapping(path="/updateEmailByName")
+    @GetMapping(path = "/updateEmailByName")
     @ResponseBody
-    public void updateEmailByName(@RequestParam String name,@RequestParam String email){
-        userRepository.updateEmailByName(name,email);
+    public void updateEmailByName(@RequestParam String name, @RequestParam String email) {
+        userRepository.updateEmailByName(name, email);
     }
 
-    @GetMapping(path="/deleteByName")
+    @GetMapping(path = "/deleteByName")
     @ResponseBody
-    public void deleteByName(@RequestParam String name)
-    {
+    public void deleteByName(@RequestParam String name) {
         userRepository.deleteByName(name);
     }
 
@@ -52,15 +51,14 @@ public class UserController {
         return userRepository.findAll();
     }
 
-
-
-    @GetMapping(path = "/delete")
+    @GetMapping(path = "/deleteById")
     public void delete(@RequestParam Long id) {
         userRepository.deleteById(id);
     }
 
     /**
      * 验证排序和分页查询方法
+     *
      * @return
      */
     @GetMapping(path = "/page")
@@ -73,12 +71,20 @@ public class UserController {
 
     /**
      * 验证排序方法
+     *
      * @return
      */
-    @GetMapping(path="/sort")
+    @GetMapping(path = "/sort")
     @ResponseBody
-    public Iterable<User> getAllUsersWithSort(){
+    public Iterable<User> getAllUsersWithSort() {
         return userRepository.findAll(Sort.by(Sort.Order.asc("name")));
     }
 
+    @GetMapping(path="/delete")
+    @ResponseBody
+    public void delete( User user){
+
+        userRepository.delete(user);
+        System.out.println(12111);
+    }
 }
